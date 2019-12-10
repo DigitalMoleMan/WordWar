@@ -2,22 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletController : MonoBehaviour
+public class CrosshairController : MonoBehaviour
 {
-    public int lifetime;
-    public Vector3 velocity;
     // Start is called before the first frame update
     void Start()
     {
-}
+        
+    }
 
     // Update is called once per frame
     void Update()
     {
         Transform t = GetComponent<Transform>();
-
-        t.position += velocity;
-        if (lifetime < 0) Destroy(gameObject);
-        else lifetime--;
+        t.position = Input.mousePosition;
     }
 }
