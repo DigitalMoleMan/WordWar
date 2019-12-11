@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class CrosshairController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public float mouseSpeed = 1;
     void Start()
     {
-        
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void Update()
     {
         Transform t = GetComponent<Transform>();
-        t.position = Input.mousePosition;
+        t.position += (GetMouseMovement() * mouseSpeed);
+    }
+
+    Vector3 GetMouseMovement()
+    {
+        return new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), 0);
     }
 }

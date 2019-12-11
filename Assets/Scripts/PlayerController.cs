@@ -7,7 +7,13 @@ public class PlayerController : MonoBehaviour {
 
     public float moveSpeed = 1;
 
+    public Transform aimTowards;
+
     public Object bullet;
+
+    public int fireRate = 1;
+
+    private int weaponCooldown = 0;
     void Start()
     {
         
@@ -21,12 +27,20 @@ public class PlayerController : MonoBehaviour {
         rb2d.AddForce(GetInputDirection() * moveSpeed);
 
 
-       if (Input.GetButton("Fire1")) {
-            Debug.Log("Fire!");
+       if (Input.GetButton("Fire1") && (weaponCooldown == 0)) {
+
+            weaponCooldown = 100;
             GameObject firedBullet = Instantiate(bullet) as GameObject;
-            firedBullet.transform.position = t.position;
-            firedBullet.GetComponent<BulletController>().velocity = ( Input.mousePosition - t.position).normalized;
+
+            Vector3 aimDirection = (aimTowards.position - t.position).normalized;
+            firedBullet.transform.position = t.position + aimDirection;
+
+            
+            //firedBullet.transform.rotation = Quaternion.LookRotation(aimDirection, Vector3.up);
+            firedBullet.GetComponent<BulletController>().velocity = aimDirection / 4;
         }
+
+        if (weaponCooldown > 0) weaponCooldown -= fireRate;
     }
 
     Vector3 GetInputDirection() {

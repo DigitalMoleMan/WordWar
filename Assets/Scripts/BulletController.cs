@@ -17,7 +17,12 @@ public class BulletController : MonoBehaviour
         Transform t = GetComponent<Transform>();
 
         t.position += velocity;
-        if (lifetime < 0) Destroy(gameObject);
+        if (lifetime < 0)
+        {
+            ParticleSystem ps = GetComponent<ParticleSystem>();
+            ps.Play();
+            Destroy(gameObject);
+        }
         else lifetime--;
     }
 }
