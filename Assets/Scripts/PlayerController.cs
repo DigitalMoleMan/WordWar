@@ -7,40 +7,55 @@ public class PlayerController : MonoBehaviour {
 
     public float moveSpeed = 1;
 
+    public int healthPoints = 10;
+
     public Transform aimTowards;
 
     public Object bullet;
 
+    public float bulletSpeed = 1;
+
     public int fireRate = 1;
 
     private int weaponCooldown = 0;
+
+    private Transform t;
+    private Rigidbody2D rb2d;
     void Start()
     {
-        
+        t = transform;
+        rb2d = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Transform t = GetComponent<Transform>();
-        Rigidbody2D rb2d = GetComponent<Rigidbody2D>();
         rb2d.AddForce(GetInputDirection() * moveSpeed);
 
 
-       if (Input.GetButton("Fire1") && (weaponCooldown == 0)) {
-
-            weaponCooldown = 100;
-            GameObject firedBullet = Instantiate(bullet) as GameObject;
-
-            Vector3 aimDirection = (aimTowards.position - t.position).normalized;
-            firedBullet.transform.position = t.position + aimDirection;
-
-            
-            //firedBullet.transform.rotation = Quaternion.LookRotation(aimDirection, Vector3.up);
-            firedBullet.GetComponent<BulletController>().velocity = aimDirection / 4;
-        }
+        if (Input.GetButton("Fire1") && weaponCooldown == 0) FireBullet();
 
         if (weaponCooldown > 0) weaponCooldown -= fireRate;
+    }
+
+    void FireBullet() {
+
+        Vector3 aimDirection = (aimTowards.position - t.position).normalized;
+        
+        GameObject firedBullet = Instantiate(bullet) as GameObject;
+
+
+        firedBullet.transform.position = t.position + aimDirection;
+
+       
+        firedBullet.transform.Rotate(0, 0, Vector3.Angle(t.position, aimTowards.position));
+        
+        Rigidbody2D bulletRb2d = firedBullet.GetComponent<Rigidbody2D>();
+        //BulletController bulletController = firedBullet.GetComponent<BulletController>();
+
+        bulletRb2d.AddForce(aimDirection * bulletSpeed);
+
+        weaponCooldown = 100;
     }
 
     Vector3 GetInputDirection() {

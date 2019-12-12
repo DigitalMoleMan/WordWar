@@ -4,25 +4,28 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-    public int lifetime;
+    public float lifetime;
     public Vector3 velocity;
-    // Start is called before the first frame update
+
+    ParticleSystem ps;
     void Start()
     {
-}
+        ps = GetComponent<ParticleSystem>();
+
+        Destroy(gameObject, lifetime);
+    }
 
     // Update is called once per frame
-    void Update()
-    {
-        Transform t = GetComponent<Transform>();
+    void Update(){
 
-        t.position += velocity;
-        if (lifetime < 0)
-        {
-            ParticleSystem ps = GetComponent<ParticleSystem>();
-            ps.Play();
-            Destroy(gameObject);
-        }
-        else lifetime--;
+        UpdatePosition();
+        
+        
+            
+            
+    }
+
+    void UpdatePosition() {
+        transform.position += velocity;
     }
 }

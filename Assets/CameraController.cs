@@ -10,6 +10,8 @@ public class CameraController : MonoBehaviour
 
     public Transform[] following;
 
+    public Vector3 offset;
+
     void Start()
     {
         
@@ -25,10 +27,8 @@ public class CameraController : MonoBehaviour
         }
         focusPoint /= following.Length;
 
-        focusPoint.z = -10;
+        focusPoint += offset;
 
-        float distFromMain = (mainFocus.position - focusPoint).magnitude - 10;
-
-        if(distFromMain < maxDistanceFromMain)transform.position = focusPoint;
+        transform.position = focusPoint;
     }
 }
