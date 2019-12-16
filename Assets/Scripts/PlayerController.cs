@@ -9,15 +9,11 @@ public class PlayerController : MonoBehaviour {
 
     public int healthPoints = 10;
 
+    public GameObject hands;
+
     public Transform aimTowards;
 
     public Object bullet;
-
-    public float bulletSpeed = 1;
-
-    public int fireRate = 1;
-
-    private int weaponCooldown = 0;
 
     private Transform t;
     private Rigidbody2D rb2d;
@@ -25,6 +21,9 @@ public class PlayerController : MonoBehaviour {
     {
         t = transform;
         rb2d = GetComponent<Rigidbody2D>();
+        hands = t.Find("Hands").gameObject;
+
+
     }
 
     // Update is called once per frame
@@ -32,30 +31,15 @@ public class PlayerController : MonoBehaviour {
     {
         rb2d.AddForce(GetInputDirection() * moveSpeed);
 
+        UpdateHandRotation();
 
-        if (Input.GetButton("Fire1") && weaponCooldown == 0) FireBullet();
-
-        if (weaponCooldown > 0) weaponCooldown -= fireRate;
+        if (Input.GetButton("Fire1")) hands.GetComponentInChildren<GunController>().Shoot();
     }
 
-    void FireBullet() {
+    void UpdateHandRotation() {
+        Vector3 offset_pos = aimTowards.position - hands.transform.position;
 
-        Vector3 aimDirection = (aimTowards.position - t.position).normalized;
-        
-        GameObject firedBullet = Instantiate(bullet) as GameObject;
-
-
-        firedBullet.transform.position = t.position + aimDirection;
-
-       
-        firedBullet.transform.Rotate(0, 0, Vector3.Angle(t.position, aimTowards.position));
-        
-        Rigidbody2D bulletRb2d = firedBullet.GetComponent<Rigidbody2D>();
-        //BulletController bulletController = firedBullet.GetComponent<BulletController>();
-
-        bulletRb2d.AddForce(aimDirection * bulletSpeed);
-
-        weaponCooldown = 100;
+        hands.transform.rotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Atan2(offset_pos.y, offset_pos.x) * Mathf.Rad2Deg));
     }
 
     Vector3 GetInputDirection() {

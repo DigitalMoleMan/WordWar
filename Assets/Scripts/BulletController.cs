@@ -2,30 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletController : MonoBehaviour
-{
-    public float lifetime;
-    public Vector3 velocity;
+public class BulletController : MonoBehaviour {
+    public int damage = 1;
 
     ParticleSystem ps;
-    void Start()
-    {
+    void Start() {
         ps = GetComponent<ParticleSystem>();
-
-        Destroy(gameObject, lifetime);
     }
 
     // Update is called once per frame
-    void Update(){
-
-        UpdatePosition();
-        
-        
-            
-            
+    void Update() {
     }
 
-    void UpdatePosition() {
-        transform.position += velocity;
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.gameObject.tag == "Enemy") {
+            collision.gameObject.GetComponent<EnemyController>().Damage(damage);
+            
+        }
+
+        Destroy(gameObject);
     }
 }

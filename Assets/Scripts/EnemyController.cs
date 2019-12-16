@@ -4,28 +4,36 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    public int startingHp = 10;
+    public int hp = 1;
     public float moveSpeed = 5;
     public GameObject currentTarget;
 
-    private int hp;
+   
     private Rigidbody2D rb2d;
+    private GameObject hands;
     
     void Start()
     {
-        hp = startingHp;
         rb2d = GetComponent<Rigidbody2D>();
+        hands = transform.Find("Hands").gameObject;
     }
 
     void Update()
     {
         MoveTowardsTarget();
 
-        if (hp < 0) Die();
+        UpdateHandRotation();
     }
 
-    private void OnCollisionEnter(Collision collision) {
-        Debug.Log("hey");
+    void UpdateHandRotation() {
+        Vector3 offset_pos = currentTarget.transform.position - hands.transform.position;
+
+        hands.transform.rotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Atan2(offset_pos.y, offset_pos.x) * Mathf.Rad2Deg));
+    }
+
+    public void Damage(int dmg) {
+        if (hp >= 0) hp -= dmg;
+        else Die();
     }
 
     void MoveTowardsTarget() {
@@ -34,6 +42,7 @@ public class EnemyController : MonoBehaviour
     }
 
     void Die() {
+        Debug.Log("I died");
         Destroy(gameObject);
     }
 }
