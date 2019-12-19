@@ -2,47 +2,60 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
-{
-    public int hp = 1;
+public class EnemyController : HpController {
     public float moveSpeed = 5;
-    public GameObject currentTarget;
+    public float visionRadius = 10;
+    public GameObject equippedWeapon;
 
-   
     private Rigidbody2D rb2d;
-    private GameObject hands;
-    
-    void Start()
-    {
+    private GameObject currentTarget;
+    private GameObject activeWeapon;
+    private bool targetInRange = false;
+
+    void Start() {
         rb2d = GetComponent<Rigidbody2D>();
-        hands = transform.Find("Hands").gameObject;
+        currentTarget = GameObject.Find("Player");
+
+        activeWeapon = Instantiate(equippedWeapon) as GameObject;
+        activeWeapon.transform.SetParent(transform);
+        activeWeapon.transform.position = transform.position;
+
+
     }
 
-    void Update()
-    {
-        MoveTowardsTarget();
+    void Update() {
 
-        UpdateHandRotation();
+        float distanceFromTarget = (currentTarget.transform.position - transform.position).magnitude;
+
+        if (distanceFromTarget < visionRadius) targetInRange = true;
+        else targetInRange = false;
+
+        if (targetInRange) {
+            MoveTowardsTarget();
+            AimTowardsTarget(currentTarget.transform);
+            activeWeapon.GetComponent<GunController>().Shoot();
+        }
+
+        if (hp <= 0) Die();
     }
 
-    void UpdateHandRotation() {
-        Vector3 offset_pos = currentTarget.transform.position - hands.transform.position;
 
-        hands.transform.rotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Atan2(offset_pos.y, offset_pos.x) * Mathf.Rad2Deg));
-    }
-
-    public void Damage(int dmg) {
-        if (hp >= 0) hp -= dmg;
-        else Die();
-    }
 
     void MoveTowardsTarget() {
         Vector3 targetDir = (currentTarget.transform.position - transform.position).normalized;
         rb2d.AddForce(targetDir * moveSpeed);
     }
 
+    void AimTowardsTarget(Transform target) {
+        Vector3 offset_pos = target.position - activeWeapon.transform.position;
+
+        activeWeapon.transform.rotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Atan2(offset_pos.y, offset_pos.x) * Mathf.Rad2Deg));
+    }
+
+    
+
     void Die() {
-        Debug.Log("I died");
+        activeWeapon.transform.SetParent(GameObject.Find("WorldDrops").transform);
         Destroy(gameObject);
     }
 }
