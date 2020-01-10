@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour {
     public Transform aimTowards;
     public GameObject startingWeapon;
 
-    private GameObject activeWeapon;
+    public GameObject activeWeapon;
     private Transform t;
     private Rigidbody2D rb2d;
     void Start()
@@ -30,26 +30,31 @@ public class PlayerController : MonoBehaviour {
         rb2d.AddForce(GetInputDirection() * moveSpeed);
 
         AimTowardsTarget(aimTowards);
-
-        if (Input.GetButton("Fire1")) activeWeapon.GetComponent<GunController>().Shoot();
-
-        if (Input.GetButton("Fire2")) {
-            GameObject drops = GameObject.Find("WorldDrops");
-
-            foreach (Transform drop in drops.transform) {
-                
-                if((drop.position - t.position).magnitude < 2) {
-
-                    activeWeapon.transform.SetParent(drops.transform);
-                    activeWeapon = drop.gameObject;
-                    activeWeapon.transform.SetParent(t);
-                    activeWeapon.transform.position = t.position;
-                }
-                
-            }
+        if (activeWeapon.GetComponent<GunController>().automatic && Input.GetButton("Fire1")) {
+            activeWeapon.GetComponent<GunController>().Shoot();
+        } else if (Input.GetButtonDown("Fire1")) {
+            activeWeapon.GetComponent<GunController>().Shoot();
         }
 
+        if (Input.GetButtonDown("Interact")) PickUpWeapon();
+
         if (hp <= 0) Die();
+    }
+
+    void PickUpWeapon() {
+        GameObject drops = GameObject.Find("WorldDrops");
+
+        foreach (Transform drop in drops.transform) {
+
+            if ((drop.position - t.position).magnitude < 2) {
+
+                activeWeapon.transform.SetParent(drops.transform);
+                activeWeapon = drop.gameObject;
+                activeWeapon.transform.SetParent(t);
+                activeWeapon.transform.position = t.position;
+            }
+
+        }
     }
 
     public void Damage(float dmg) {
@@ -57,7 +62,11 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Die() {
-        Destroy(gameObject);
+        
+        Destroy(gameObject.GetComponent<CapsuleCollider2D>());
+        Destroy(gameObject.GetComponent<Rigidbody2D>());
+        Destroy(transform.Find("Text"));
+        Destroy(gameObject.GetComponent<PlayerController>());
     }
 
     void AimTowardsTarget(Transform target) {
