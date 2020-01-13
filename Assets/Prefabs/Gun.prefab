@@ -99,7 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Gun
   bullets: {fileID: 6916423428260441147, guid: e2f1fe7c730463f40809e8cf17c45fc3, type: 3}
-  bulletVelocity: 8
+  bulletVelocity: 6
   fireRate: 6
   automatic: 0
   ammo: 24

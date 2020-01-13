@@ -9,15 +9,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3100968552198562199}
-  - component: {fileID: 4979017392292409180}
-  - component: {fileID: 3100968552198562200}
+  - component: {fileID: 8315243438975392798}
   - component: {fileID: 3100968552198562201}
   - component: {fileID: 3100968552198562202}
+  - component: {fileID: 3100968552198562200}
   - component: {fileID: 3100968552198562203}
   - component: {fileID: 8440538868491521197}
   - component: {fileID: 6415682423077172385}
+  - component: {fileID: 6684592575309947664}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Enemy_Thug
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +43,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0.3, y: 1.3}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4979017392292409180
+--- !u!114 &8315243438975392798
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -51,7 +52,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3100968552198562204}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2fdab97d79f3384a97044b3a3dbfab7, type: 3}
+  m_Script: {fileID: 11500000, guid: feb0a9581de129940aca6882a096fb76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 5
@@ -59,6 +60,22 @@ MonoBehaviour:
   visionRadius: 15
   equippedWeapon: {fileID: 5589335785816481648, guid: 77d1d3304678e3a42b3daaa0aa27d837,
     type: 3}
+--- !u!33 &3100968552198562201
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3100968552198562204}
+  m_Mesh: {fileID: 0}
+--- !u!222 &3100968552198562202
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3100968552198562204}
+  m_CullTransparentMesh: 0
 --- !u!23 &3100968552198562200
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -97,22 +114,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &3100968552198562201
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3100968552198562204}
-  m_Mesh: {fileID: 0}
---- !u!222 &3100968552198562202
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3100968552198562204}
-  m_CullTransparentMesh: 0
 --- !u!114 &3100968552198562203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,3 +263,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!195 &6684592575309947664
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3100968552198562204}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 3
+  m_ObstacleAvoidanceType: 4

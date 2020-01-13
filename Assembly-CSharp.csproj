@@ -66,7 +66,10 @@
     <Compile Include="Assets\Scripts\BulletController.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\CrosshairController.cs" />
+    <Compile Include="Assets\Scripts\Enemy Behaviours\EnBeThug.cs" />
     <Compile Include="Assets\Scripts\EnemyController.cs" />
+    <Compile Include="Assets\Scripts\GameController.cs" />
+    <Compile Include="Assets\Scripts\GlobalGameObject.cs" />
     <Compile Include="Assets\Scripts\GunController.cs" />
     <Compile Include="Assets\Scripts\HpController.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />

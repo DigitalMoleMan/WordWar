@@ -33,9 +33,9 @@ public class PlayerController : MonoBehaviour {
     void Update()
     {
         GunController activeWeaponController = activeWeapon.GetComponent<GunController>();
+        Vector3 inputDir = GetInputDirection();
 
-
-        rb2d.AddForce(GetInputDirection() * moveSpeed);
+        rb2d.AddForce(inputDir * moveSpeed);
         
 
         AimTowardsTarget(aimTowards);
@@ -46,10 +46,17 @@ public class PlayerController : MonoBehaviour {
 
         if (!cc2d.enabled && rollCooldown < 15) cc2d.enabled = true;
 
+        anim.SetInteger("Roll Cooldown", rollCooldown);
+        anim.SetFloat("Input Dir X", inputDir.x);
+        anim.SetFloat("Input Dir Y", inputDir.y);
         if (rollCooldown <= 0) {
+
+            if (Input.GetButtonDown("Roll") && inputDir.magnitude > 0) Roll();
+        } else {
             
-            if (Input.GetButtonDown("Roll") && GetInputDirection().magnitude > 0) Roll();
-        } else rollCooldown--;
+           
+            rollCooldown--;
+        }
 
         if (hp <= 0) Die();
     }
@@ -73,6 +80,8 @@ public class PlayerController : MonoBehaviour {
     void Roll() {
         rb2d.AddForce(GetInputDirection() * rollSpeed);
         anim.Play("Player_Roll");
+        
+        
         cc2d.enabled = false;
         rollCooldown = 40;
     }

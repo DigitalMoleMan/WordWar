@@ -1,18 +1,24 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 public class EnemyController : HpController {
+
+
     public float moveSpeed = 5;
     public float visionRadius = 10;
     public GameObject equippedWeapon;
 
-    private Rigidbody2D rb2d;
-    private GameObject currentTarget;
-    private GameObject activeWeapon;
-    private bool targetInRange = false;
+
+    protected Rigidbody2D rb2d;
+    protected GameObject currentTarget;
+    protected GameObject activeWeapon;
+    protected bool targetInRange = false;
+    protected bool isColliding = false;
 
     void Start() {
+        
         rb2d = GetComponent<Rigidbody2D>();
         currentTarget = GameObject.Find("Player");
 
@@ -20,33 +26,39 @@ public class EnemyController : HpController {
         activeWeapon.transform.SetParent(transform);
         activeWeapon.transform.position = transform.position;
 
+        TypeStart();
+    }
 
+    public virtual void TypeStart() {
+        
     }
 
     void Update() {
-
-        float distanceFromTarget = (currentTarget.transform.position - transform.position).magnitude;
-
-        if (distanceFromTarget < visionRadius) targetInRange = true;
-        else targetInRange = false;
-
-        if (targetInRange) {
-            MoveTowardsTarget();
-            AimTowardsTarget(currentTarget.transform);
-            activeWeapon.GetComponent<GunController>().Shoot();
-        }
-
+        TypeUpdate();
+        
         if (hp <= 0) Die();
+    }
+
+    public virtual void TypeUpdate() {
+
     }
 
 
 
-    void MoveTowardsTarget() {
+    protected void MoveTowardsTarget() {
         Vector3 targetDir = (currentTarget.transform.position - transform.position).normalized;
         rb2d.AddForce(targetDir * moveSpeed);
     }
 
-    void AimTowardsTarget(Transform target) {
+    private void OnCollisionEnter2D(Collision2D collision) {
+        Debug.Log(collision);
+        isColliding = true;
+    }
+
+    private void OnCollisionExit2D(Collision2D collision) {
+        isColliding = false;
+    }
+    protected void AimTowardsTarget(Transform target) {
         Vector3 offset_pos = target.position - activeWeapon.transform.position;
 
         activeWeapon.transform.rotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Atan2(offset_pos.y, offset_pos.x) * Mathf.Rad2Deg));

@@ -12,6 +12,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: StaticObject_Wall
       objectReference: {fileID: 0}
+    - target: {fileID: 4398287272548921992, guid: c0bcf659c9c4bd649b6586bbf1f8a280,
+        type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4944508460955420359, guid: c0bcf659c9c4bd649b6586bbf1f8a280,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -81,6 +86,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.x
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624388639917264859, guid: c0bcf659c9c4bd649b6586bbf1f8a280,
+        type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 312038826969139902, guid: c0bcf659c9c4bd649b6586bbf1f8a280,
+        type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5001540850570424612, guid: c0bcf659c9c4bd649b6586bbf1f8a280,
         type: 3}
