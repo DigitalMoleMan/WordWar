@@ -6,22 +6,25 @@ using UnityEngine.UI;
 public class WeaponAmmoGetter : MonoBehaviour
 {
 
+    private PlayerController player;
     private GunController playerWeapon;
-    private Text nameDisplay;
-    private Text ammoDisplay;
+    private Transform weaponInfoContainer;
+    private Text weaponNameDisplay;
+    private Text weaponAmmoDisplay;
     // Start is called before the first frame update
     void Start()
     {
-        nameDisplay = transform.Find("Weapon Name").GetComponent<Text>();
-        ammoDisplay = transform.Find("Weapon Ammo").GetComponent<Text>();
-
+        player = GameObject.Find("Player").GetComponent<PlayerController>();
+        weaponInfoContainer = transform.Find("Weapon Info");
+        weaponNameDisplay = weaponInfoContainer.Find("Weapon Name").GetComponent<Text>();
+        weaponAmmoDisplay = weaponInfoContainer.Find("Weapon Ammo").GetComponent<Text>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        playerWeapon = GameObject.Find("Player").GetComponent<PlayerController>().activeWeapon.GetComponent<GunController>();
-        nameDisplay.text = playerWeapon.name;
-        ammoDisplay.text = $"Ammo {playerWeapon.ammo}/{playerWeapon.maxAmmo}";
+        playerWeapon = player.activeWeapon.GetComponent<GunController>();
+        weaponNameDisplay.text = playerWeapon.name;
+        weaponAmmoDisplay.text = $"Ammo {playerWeapon.ammo}/{playerWeapon.maxAmmo}";
     }
 }
