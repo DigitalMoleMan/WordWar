@@ -17,12 +17,14 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody2D rb2d;
     private CapsuleCollider2D cc2d;
     private Animator anim;
+    AudioSource audio;
     void Start()
     {
         t = transform;
         rb2d = GetComponent<Rigidbody2D>();
         cc2d = GetComponent<CapsuleCollider2D>();
         anim = GetComponent<Animator>();
+        audio = GetComponent<AudioSource>();
         aimTowards = transform.Find("Crosshair");
         activeWeapon = Instantiate(startingWeapon);
         activeWeapon.transform.SetParent(transform);
@@ -35,12 +37,12 @@ public class PlayerController : MonoBehaviour {
         GunController activeWeaponController = activeWeapon.GetComponent<GunController>();
         Vector3 inputDir = GetInputDirection();
 
-        rb2d.AddForce(inputDir * moveSpeed);
+        rb2d.AddForce((inputDir * moveSpeed) * (Time.deltaTime * 60));
         
 
         AimTowardsTarget(aimTowards);
-        if (activeWeaponController.automatic && Input.GetButton("Fire1")) activeWeaponController.Shoot();
-        else if (Input.GetButtonDown("Fire1")) activeWeaponController.Shoot();
+        if (activeWeaponController.automatic && Input.GetButton("Fire1")) activeWeaponController.Use();
+        else if (Input.GetButtonDown("Fire1")) activeWeaponController.Use();
 
         if (Input.GetButtonDown("Interact")) PickUpWeapon();
 
@@ -49,13 +51,14 @@ public class PlayerController : MonoBehaviour {
         anim.SetInteger("Roll Cooldown", rollCooldown);
         anim.SetFloat("Input Dir X", inputDir.x);
         anim.SetFloat("Input Dir Y", inputDir.y);
+        anim.SetFloat("Velocity", rb2d.velocity.magnitude);
         if (rollCooldown <= 0) {
 
             if (Input.GetButtonDown("Roll") && inputDir.magnitude > 0) Roll();
         } else {
             
            
-            rollCooldown--;
+            rollCooldown -= Mathf.RoundToInt(Time.deltaTime * 60);
         }
 
         if (hp <= 0) Die();
@@ -78,9 +81,9 @@ public class PlayerController : MonoBehaviour {
     }
     
     void Roll() {
-        rb2d.AddForce(GetInputDirection() * rollSpeed);
-        anim.Play("Player_Roll");
-        
+        rb2d.AddForce((GetInputDirection() * rollSpeed) * (Time.deltaTime * 60));
+        anim.Play("Roll");
+        audio.Play();
         
         cc2d.enabled = false;
         rollCooldown = 40;

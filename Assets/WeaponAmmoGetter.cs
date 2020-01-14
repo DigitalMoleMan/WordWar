@@ -25,6 +25,6 @@ public class WeaponAmmoGetter : MonoBehaviour
     {
         playerWeapon = player.activeWeapon.GetComponent<GunController>();
         weaponNameDisplay.text = playerWeapon.name;
-        weaponAmmoDisplay.text = $"Ammo {playerWeapon.ammo}/{playerWeapon.maxAmmo}";
+        //weaponAmmoDisplay.text = $"Ammo {playerWeapon.ammo}/{playerWeapon.maxAmmo}";
     }
 }

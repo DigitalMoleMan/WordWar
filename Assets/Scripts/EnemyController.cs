@@ -14,13 +14,19 @@ public class EnemyController : HpController {
     protected Rigidbody2D rb2d;
     protected GameObject currentTarget;
     protected GameObject activeWeapon;
+
     protected bool targetInRange = false;
-    protected bool isColliding = false;
+
+    protected CapsuleCollider2D navCollider;
 
     void Start() {
         
         rb2d = GetComponent<Rigidbody2D>();
         currentTarget = GameObject.Find("Player");
+
+       
+
+        navCollider = GameObject.Find("NavBox").GetComponent<CapsuleCollider2D>();
 
         activeWeapon = Instantiate(equippedWeapon) as GameObject;
         activeWeapon.transform.SetParent(transform);
@@ -29,13 +35,14 @@ public class EnemyController : HpController {
         TypeStart();
     }
 
+   
+
     public virtual void TypeStart() {
         
     }
 
     void Update() {
         TypeUpdate();
-        
         if (hp <= 0) Die();
     }
 
@@ -43,21 +50,16 @@ public class EnemyController : HpController {
 
     }
 
+    void OnTriggerEnter2D() {
 
+    }
 
     protected void MoveTowardsTarget() {
         Vector3 targetDir = (currentTarget.transform.position - transform.position).normalized;
-        rb2d.AddForce(targetDir * moveSpeed);
+        rb2d.AddForce((targetDir * moveSpeed) * (Time.deltaTime * 60));
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) {
-        Debug.Log(collision);
-        isColliding = true;
-    }
 
-    private void OnCollisionExit2D(Collision2D collision) {
-        isColliding = false;
-    }
     protected void AimTowardsTarget(Transform target) {
         Vector3 offset_pos = target.position - activeWeapon.transform.position;
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunController : MonoBehaviour
+public class GunController : WeaponController
 {
     public string name;
     public GameObject bullets;
@@ -15,6 +15,7 @@ public class GunController : MonoBehaviour
 
     Transform visuals;
     Animator anim;
+    AudioSource audio;
 
     float cooldown = 0;
 
@@ -23,18 +24,21 @@ public class GunController : MonoBehaviour
     {
         visuals = transform.Find("Visuals");
         anim = visuals.GetComponent<Animator>();
+        audio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (cooldown > 0) cooldown -= fireRate;
+        if (cooldown > 0) cooldown -= fireRate * (Time.deltaTime * 60);
     }
 
-    public void Shoot() {
+    public void Use() {
         if(ammo > 0) { 
         if (cooldown <= 0) {
             anim.Play("Shooting");
+                audio.Play();
+               
             GameObject firedBullet = Instantiate(bullets) as GameObject;
 
             firedBullet.transform.SetParent(GameObject.Find("WorldProjectiles").transform);
@@ -47,10 +51,11 @@ public class GunController : MonoBehaviour
             firedBullet.GetComponent<BulletController>().firedBy = transform.parent.tag;
                 if (transform.parent.tag == "Player") ammo--;
 
-            bulletRb2d.AddForce(firedBullet.transform.right * bulletVelocity);
+            bulletRb2d.AddForce((firedBullet.transform.right * bulletVelocity) * (Time.deltaTime * 60));
 
             cooldown = 100;
-        }
+                
+            }
         }
     }
 }

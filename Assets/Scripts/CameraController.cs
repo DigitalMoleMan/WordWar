@@ -8,23 +8,22 @@ public class CameraController : MonoBehaviour
     public Transform mainFocus;
     public int maxDistanceFromMain = 100;
 
+
     public Transform[] following;
 
     public Vector3 offset;
 
     void Start()
     {
-        
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         Vector3 focusPoint = new Vector3();
-        for(int i = 0; i < following.Length; i++)
-        {
-            focusPoint += following[i].position;
-        }
+        for(int i = 0; i < following.Length; i++) focusPoint += following[i].position;
+
         focusPoint /= following.Length;
 
         focusPoint += offset;
