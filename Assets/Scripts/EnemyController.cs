@@ -56,7 +56,7 @@ public class EnemyController : HpController {
 
     protected void MoveTowardsTarget() {
         Vector3 targetDir = (currentTarget.transform.position - transform.position).normalized;
-        rb2d.AddForce((targetDir * moveSpeed) * (Time.deltaTime * 60));
+        rb2d.AddForce(targetDir * moveSpeed);
     }
 
 

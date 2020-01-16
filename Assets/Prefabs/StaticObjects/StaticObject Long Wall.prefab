@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &9040105580842202710
+--- !u!1001 &8341408688269383026
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 4398287272548921992, guid: c0bcf659c9c4bd649b6586bbf1f8a280,
         type: 3}
       propertyPath: m_Name
-      value: StaticObject_Wall
+      value: StaticObject Long Wall
       objectReference: {fileID: 0}
     - target: {fileID: 4398287272548921992, guid: c0bcf659c9c4bd649b6586bbf1f8a280,
         type: 3}
@@ -75,7 +75,7 @@ PrefabInstance:
     - target: {fileID: 6405184535318908720, guid: c0bcf659c9c4bd649b6586bbf1f8a280,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6405184535318908720, guid: c0bcf659c9c4bd649b6586bbf1f8a280,
         type: 3}
@@ -85,7 +85,7 @@ PrefabInstance:
     - target: {fileID: 6737425927755385476, guid: c0bcf659c9c4bd649b6586bbf1f8a280,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 4
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4624388639917264859, guid: c0bcf659c9c4bd649b6586bbf1f8a280,
         type: 3}
@@ -100,22 +100,22 @@ PrefabInstance:
     - target: {fileID: 5001540850570424612, guid: c0bcf659c9c4bd649b6586bbf1f8a280,
         type: 3}
       propertyPath: m_text
-      value: WALL
+      value: LONG WALL
       objectReference: {fileID: 0}
     - target: {fileID: 5001540850570424612, guid: c0bcf659c9c4bd649b6586bbf1f8a280,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 4
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5001540850570424612, guid: c0bcf659c9c4bd649b6586bbf1f8a280,
         type: 3}
       propertyPath: m_textInfo.spaceCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5001540850570424612, guid: c0bcf659c9c4bd649b6586bbf1f8a280,
         type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5001540850570424612, guid: c0bcf659c9c4bd649b6586bbf1f8a280,
         type: 3}
@@ -130,12 +130,22 @@ PrefabInstance:
     - target: {fileID: 1086884244948993082, guid: c0bcf659c9c4bd649b6586bbf1f8a280,
         type: 3}
       propertyPath: m_Size.x
-      value: 3
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1086884244948993082, guid: c0bcf659c9c4bd649b6586bbf1f8a280,
+        type: 3}
+      propertyPath: m_UsedByComposite
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5634810849359098911, guid: c0bcf659c9c4bd649b6586bbf1f8a280,
         type: 3}
       propertyPath: m_Size.x
-      value: 3
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5634810849359098911, guid: c0bcf659c9c4bd649b6586bbf1f8a280,
+        type: 3}
+      propertyPath: m_UsedByComposite
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c0bcf659c9c4bd649b6586bbf1f8a280, type: 3}

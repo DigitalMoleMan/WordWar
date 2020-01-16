@@ -193,6 +193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firedBy: 
   damage: 0.5
+  velocity: 6
 --- !u!50 &4364925701893934073
 Rigidbody2D:
   serializedVersion: 4

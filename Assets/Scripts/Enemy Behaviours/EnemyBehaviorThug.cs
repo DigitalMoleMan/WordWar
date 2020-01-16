@@ -12,10 +12,21 @@ public class EnemyBehaviorThug : EnemyController
 
         targetInRange = (distanceFromTarget < visionRadius) ? true : false;
 
+        GunController activeWeaponController = activeWeapon.GetComponent<GunController>();
+        AudioSource shootSound = activeWeapon.GetComponent<AudioSource>();
+
         if (targetInRange) {
            MoveTowardsTarget();
             AimTowardsTarget(currentTarget.transform);
-            activeWeapon.GetComponent<GunController>().Use();
-        }
+
+            if (activeWeaponController.cooldown == 0) {
+                activeWeaponController.Use();
+
+
+                if (activeWeaponController.automatic) {
+                    if (!shootSound.isPlaying) shootSound.Play();
+                } else shootSound.Play();
+            }
+        } else shootSound.Stop();
     }
 }

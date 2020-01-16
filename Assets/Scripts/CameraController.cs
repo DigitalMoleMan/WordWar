@@ -15,6 +15,7 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
+        Application.targetFrameRate = 60;
         Cursor.visible = false;
     }
 

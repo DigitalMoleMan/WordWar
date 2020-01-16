@@ -309,7 +309,6 @@ MonoBehaviour:
   bulletVelocity: 10
   fireRate: 100
   automatic: 1
-  ammo: 250
   maxAmmo: 250
 --- !u!95 &6685986801396320027
 Animator:
@@ -340,8 +339,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: 7acb314a90b8cc442bd18b53bc1c19e7, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

@@ -5,37 +5,41 @@ using UnityEngine;
 public class BulletController : MonoBehaviour {
     public string firedBy;
     public float damage = 1;
+    public float velocity = 1;
 
-    ParticleSystem ps;
-    Transform trail;
+    GameObject trail;
 
     private int lifetime = 500;
     void Start() {
-        ps = GetComponent<ParticleSystem>();
-        trail = transform.Find("Trail");
+        trail = GameObject.Find("Trail");
+
     }
 
     // Update is called once per frame
     void Update() {
         lifetime--;
 
-        if (lifetime <= 0) {
-            trail.parent = transform.parent;
-            Destroy(gameObject);
-        }
+        if (lifetime <= 0) RemoveBullet();
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.tag != firedBy) {
             if (collision.gameObject.tag == "Enemy") collision.gameObject.GetComponent<EnemyController>().Damage(damage);
-
             if (collision.gameObject.tag == "Player") collision.gameObject.GetComponent<PlayerController>().Damage(damage);
-            if (collision.gameObject.tag != "Projectile") {
-                trail.parent = transform.parent;
-                Destroy(gameObject);
-                Destroy(trail, trail.GetComponent<TrailRenderer>().time);
-            }
+            RemoveBullet();
         }
+    }
 
+    private void RemoveBullet() {
+       // MakeTrailIndependentAndDestroy();
+       /// gameObject.SetActive(false);
+        Destroy(gameObject);
+    }
+
+    private void MakeTrailIndependentAndDestroy() {
+        trail.transform.SetParent(transform.parent);
+
+        Destroy(trail, trail.GetComponent<TrailRenderer>().time);
     }
 }
